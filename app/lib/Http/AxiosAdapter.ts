@@ -16,6 +16,8 @@ export class AxiosAdapter implements IHttpAdapter{
     constructor(token: string){
         let config: AxiosRequestConfig = {
             baseURL: process.env.apiUrl as string,
+            withCredentials: true,
+            withXSRFToken: true,
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -24,9 +26,9 @@ export class AxiosAdapter implements IHttpAdapter{
         this.axiosInstance = axios.create(config)
     }
 
-    public async get(url: string, token: string): Promise<any> {
+    public async get(url: string): Promise<any> {
         const response = await this.axiosInstance.get(url);
-        return response.data;
+        return response;
         //    let axiosError: AxiosError | null = null;
         // try {
         //     const response = await this.axiosInstance.get<T>(url);
@@ -40,14 +42,13 @@ export class AxiosAdapter implements IHttpAdapter{
         //  }
       }
 
-    public async post<T> (url: string, token: string, params?: any): Promise<T>{
-        try {
-            const response = await this.axiosInstance.post<T>(url);
-            return response.data;
-        } catch (error) {
-            this.handleError(error as AxiosError)
-        }
+    public async post(url: string, data: any): Promise<any>{
+        const response = await this.axiosInstance.post(url, data);
+        return response;
     }  
 
+    public changeDefaultRoute (baseURL){
+        this.axiosInstance.defaults.baseURL = baseURL
+    }
 
 }

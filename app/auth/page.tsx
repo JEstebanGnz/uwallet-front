@@ -1,20 +1,21 @@
+'use client'
+import { cookies, headers } from 'next/headers';
 import { HttpClient } from '../lib/Http/HttpClient';
+import { useEffect } from 'react';
 
-export const user = () =>{
+export const auth = () =>{
     const userInfo= async () => {
         const http = HttpClient.getInstance();
-        const data = await http.get('/user')
-        console.log(data);
+        const response = await http.post('/api/userData', {})
+        console.log(response.data);
     }
-    userInfo();
-
-
+    useEffect(() => {
+        userInfo();
+      }, []);
     return (<>
-
-        <h2> Let's goooo</h2>
-    
+       
     </>)
-
 }
 
-export default user;
+export default auth;
+

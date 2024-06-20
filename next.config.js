@@ -14,7 +14,7 @@ module.exports = {
     },
     
     env:{
-        apiUrl: 'http://localhost:8000/api',
+        apiUrl: 'http://localhost:8000/',
         googleRedirect: 'http://localhost:8000/api/auth/google/redirect'
     }
 

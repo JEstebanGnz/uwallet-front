@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+
 import { AxiosAdapter } from "./AxiosAdapter";
 import { IHttpAdapter } from "./IHttpAdapter";
 
@@ -7,18 +7,24 @@ export class HttpClient{
     private static instance: HttpClient;
     private httpAdapter: IHttpAdapter;
 
-    private constructor(){
+    private constructor(token){
         //Here we define what implementation we want to use. In this case I chose Axios
-        const token = HttpClient.getTokenFromCookies()
+        // const token = HttpClient.getTokenFromCookies()
         this.httpAdapter = new AxiosAdapter(token)
     }
 
     public static getInstance(){
-        //Here we set the initial config in case an instance of AxiosAdapter doesn't exist yet. (baseUrl, initial headers)
-        if (!HttpClient.instance){
-            HttpClient.instance = new HttpClient()
+        const token = sessionStorage.getItem('token')
+        if (!HttpClient.instance || token !== null){
+            HttpClient.instance = new HttpClient(token)
+            return HttpClient.instance;
         }
-        return HttpClient.instance
+        return HttpClient.instance;
+    }
+    
+    public setAuthToken(token: string){
+        sessionStorage.setItem('token', token)
+        this.httpAdapter = new AxiosAdapter(token);
     }
 
     public get(url: string, data?: any){
@@ -26,16 +32,19 @@ export class HttpClient{
     }
 
 
-    public post(url: string){
-        return HttpClient.instance.httpAdapter.post(url)
+
+    public post(url: string, data: any){
+        return HttpClient.instance.httpAdapter.post(url,data)
     }
 
-    public static getTokenFromCookies(){
-        const cookieStore = cookies();
-        const token = cookieStore.get("access_token");
-        if(!token) {
-            throw new Error("Missing token")
-        }
-        return token.value
-    }
+    // public static get2FADataFromCookies(){
+    //     const cookieStore = cookies();
+    //     const setupSecretKey = cookieStore.get("setup_secret_key");
+    //     const token2fa = cookieStore.get("token_2fa");
+        
+    //     let data = [setupSecretKey, token2fa];
+
+    //     return data;
+    // }
+
 }
