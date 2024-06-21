@@ -19,9 +19,7 @@ const InputForm = ({token_2fa}: Params) => {
 }
 
   const handleSubmit = async () => {
-
     await csrfCookieRequest();
-
      const data = {
         otp:otp,
         token_2fa: token_2fa
