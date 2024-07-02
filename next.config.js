@@ -5,6 +5,11 @@ module.exports = {
     async redirects() {
       return [
         {
+          source: '/',
+          destination: '/auth/login',
+          permanent: true,
+        },
+        {
           source: '/googleLoginRedirect',
           destination: 'http://localhost:8000/api/auth/google/redirect',
           permanent: false,
