@@ -6,7 +6,7 @@ module.exports = {
       return [
         {
           source: '/',
-          destination: '/auth/login',
+          destination: '/login',
           permanent: true,
         },
         {

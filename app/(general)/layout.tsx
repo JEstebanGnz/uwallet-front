@@ -1,6 +1,11 @@
 import { Grid, Typography } from '@mui/material';
 
-export const GeneralLayout = ({ children, title = '' }) => {
+export default function GeneralLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+
   return (
     <Grid
       container
@@ -22,8 +27,6 @@ export const GeneralLayout = ({ children, title = '' }) => {
             padding: 3, 
             borderRadius: 2 
         }}>
-          
-          <Typography variant='h5' sx={{ mb: 1 , textAlign:'center'}}>{ title }</Typography>
             { children }
         </Grid>
 

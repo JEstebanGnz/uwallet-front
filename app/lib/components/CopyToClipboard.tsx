@@ -17,8 +17,7 @@ export const CopyToClipboard = ({ text }) => {
       <TextField
         variant="outlined"
         value={text}
-        sx={{ border: 'none', "& fieldset": { border: 'none' }, m: 1, 
-        width: '25ch', textAlign: 'center' }}
+        sx={{ border: 'none', "& fieldset": { border: 'none' }, m: 1, textAlign: 'center' }}
         InputProps={{
           endAdornment: <IconButton onClick={handleClick} color="primary">
           <ContentCopyIcon />

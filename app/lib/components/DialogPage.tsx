@@ -45,7 +45,7 @@ export default function DialogPage() {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"¿Cómo encuentro mi código?'"}</DialogTitle>
+        <DialogTitle>{"¿Cómo encuentro mi código?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             Aquí va un video hecho por COMUNICACIÓN INSTITUCIONAL
