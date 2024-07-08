@@ -11,6 +11,17 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { Box } from '@mui/material';
 
+interface DialogPageProps {
+  open: boolean;
+  handleClose: () => void;
+  dialogTitle: string;
+  children: React.ReactNode;
+  cancelAction?: () => void;
+  cancelActionLabel?: string;
+  acceptAction?: () => void;
+  acceptActionLabel?: string;
+}
+
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
@@ -20,24 +31,18 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DialogPage() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+const DialogPage: React.FC<DialogPageProps> = ({
+  open, 
+  handleClose, 
+  dialogTitle, 
+  children,
+  cancelAction,
+  acceptAction,
+  cancelActionLabel = 'Cancelar',
+  acceptActionLabel = 'Aceptar'
+}) => {
 
   return (
-    <React.Fragment >
-      <Box textAlign='right'>
-      <Button variant="outlined" onClick={handleClickOpen} sx={{mt:'20px'}}>
-        ¿Cómo encuentro mi código?
-      </Button>
-      </Box>
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -45,17 +50,24 @@ export default function DialogPage() {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"¿Cómo encuentro mi código?"}</DialogTitle>
+        {/* <DialogTitle>{"¿Cómo encuentro mi código?"}</DialogTitle> */}
+        <DialogTitle>{dialogTitle}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
+          {/* <DialogContentText id="alert-dialog-slide-description">
             Aquí va un video hecho por COMUNICACIÓN INSTITUCIONAL
-          </DialogContentText>
+          </DialogContentText> */}
+          {children}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cerrar</Button>
-          <Button onClick={handleClose}>Aceptar</Button>
-        </DialogActions>
+        {cancelAction && (
+          <Button onClick={cancelAction}>{cancelActionLabel}</Button>
+        )}
+        {acceptAction && (
+          <Button onClick={acceptAction}>{acceptActionLabel}</Button>
+        )}
+      </DialogActions>
       </Dialog>
-    </React.Fragment>
   );
-}
+};
+
+export default DialogPage;

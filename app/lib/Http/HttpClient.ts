@@ -14,10 +14,12 @@ export class HttpClient{
     }
 
     public static getInstance(){
-        const token = sessionStorage.getItem('token')
-        if (!HttpClient.instance || token !== null){
-            HttpClient.instance = new HttpClient(token)
-            return HttpClient.instance;
+        if (typeof window !== "undefined" && window.sessionStorage) {
+            const token = sessionStorage.getItem('token')
+            if (!HttpClient.instance || token !== null){
+                HttpClient.instance = new HttpClient(token)
+                return HttpClient.instance;
+            }
         }
         return HttpClient.instance;
     }
